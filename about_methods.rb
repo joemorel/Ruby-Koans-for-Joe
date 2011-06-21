@@ -97,11 +97,11 @@ class AboutMethods < EdgeCase::Koan
   end
 
   def test_calling_methods_in_same_class
-    assert_equal __, my_same_class_method(3,4)
+    assert_equal 12, my_same_class_method(3,4)
   end
 
   def test_calling_methods_in_same_class_with_explicit_receiver
-    assert_equal __, self.my_same_class_method(3,4)
+    assert_equal 12, self.my_same_class_method(3,4)
   end
 
   # ------------------------------------------------------------------
@@ -112,14 +112,14 @@ class AboutMethods < EdgeCase::Koan
   private :my_private_method
 
   def test_calling_private_methods_without_receiver
-    assert_equal __, my_private_method
+    assert_equal "a secret", my_private_method
   end
 
   def test_calling_private_methods_with_an_explicit_receiver
-    exception = assert_raise(___) do
+    exception = assert_raise(NoMethodError) do
       self.my_private_method
     end
-    assert_match /__/, exception.message
+    assert_match "private method `my_private_method' called for ", exception.message
   end
 
   # ------------------------------------------------------------------
@@ -138,12 +138,12 @@ class AboutMethods < EdgeCase::Koan
 
   def test_calling_methods_in_other_objects_require_explicit_receiver
     rover = Dog.new
-    assert_equal __, rover.name
+    assert_equal "Fido", rover.name
   end
 
   def test_calling_private_methods_in_other_objects
     rover = Dog.new
-    assert_raise(___) do
+    assert_raise(NoMethodError) do
       rover.tail
     end
   end
